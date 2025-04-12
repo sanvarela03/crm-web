@@ -12,17 +12,25 @@ class TokenService {
   }
 
   updateLocalAccessToken(token: string) {
-    let user = JSON.parse(localStorage.getItem('user') || '{}')
+    const user = JSON.parse(localStorage.getItem('user') || '{}')
     user.accessToken = token
     localStorage.setItem('user', JSON.stringify(user))
   }
 
-  getUser(): AuthResponse {
-    return JSON.parse(localStorage.getItem('user') || '{}')
+  getUser(): AuthResponse | null {
+    const user = JSON.parse(localStorage.getItem('user') || '{}')
+    if (user) {
+      return user
+    }
+    return null
   }
 
   setUser(user: AuthResponse) {
     localStorage.setItem('user', JSON.stringify(user))
+  }
+
+  removeUser() {
+    localStorage.removeItem('user')
   }
 }
 
